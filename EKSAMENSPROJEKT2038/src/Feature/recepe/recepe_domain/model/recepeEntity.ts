@@ -1,13 +1,45 @@
 import { Ingredient } from './recepeIngredientEntity';
 import { Category } from './recepeCategoryEntity';
 export class Recepe {
-  id;
-  name;
-  description;
-  ingredients;
-  instructions;
-  nutrisionalInformation?;
-  category;
+  private id: number;
+  private name: string;
+  private description: string;
+  private ingredients: Ingredient[];
+  private instructions: string;
+  private nutrisionalInformation?: string;
+  private category: Category;
+
+  public getId(): number {
+    return this.id;
+  }
+  public setId(id: number): void {
+    this.id = id;
+  }
+
+  public getName(): string {
+    return this.name;
+  }
+
+  public getDescription(): string {
+    return this.description;
+  }
+
+  public getIngredients(): Ingredient[] {
+    return this.ingredients;
+  }
+
+  public getInstructions(): string {
+    return this.instructions;
+  }
+
+  public getNutrisionalInformation(): string | undefined {
+    return this.nutrisionalInformation;
+  }
+
+  public getCategory(): Category {
+    return this.category;
+  }
+
   constructor(
     id: number,
     name: string,

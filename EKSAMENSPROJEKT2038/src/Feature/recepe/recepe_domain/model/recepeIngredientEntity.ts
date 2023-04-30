@@ -1,5 +1,5 @@
 export class Ingredient {
-  id;
+  id?;
   name;
   description;
   NutritionalInformation;

@@ -12,3 +12,4 @@ export class Category {
     this.description = description;
   }
 }
+
