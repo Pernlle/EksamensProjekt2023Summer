@@ -1,4 +1,6 @@
-export class recepe {
+import { Ingredient } from './recepeIngredientEntity';
+import { Category } from './recepeCategoryEntity';
+export class Recepe {
   id;
   name;
   description;
@@ -10,10 +12,10 @@ export class recepe {
     id: number,
     name: string,
     description: string,
-    ingredients: string,
+    ingredients: Ingredient[],
     instructions: string,
     nutritionalInformation: string,
-    category: string
+    category: Category
   ) {
     this.id = id;
     this.name = name;
