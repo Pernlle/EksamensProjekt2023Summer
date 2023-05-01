@@ -1,7 +1,7 @@
 import { Category } from '../../recepe_domain/model/recepeCategoryEntity';
 import { Ingredient } from '../../recepe_domain/model/recepeIngredientEntity';
 
-export interface recepeQueryResultDto {
+export interface RecepeQueryResultDto {
   id: number;
   name: string;
   description: string;
