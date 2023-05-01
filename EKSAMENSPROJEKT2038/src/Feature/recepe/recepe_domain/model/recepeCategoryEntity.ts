@@ -1,7 +1,8 @@
 export class Category {
-  id;
-  name;
-  description;
+  private id: number;
+  private name: string;
+  private description: string;
+  
   constructor(
     id: number, 
     name: string, 
@@ -11,5 +12,25 @@ export class Category {
     this.name = name;
     this.description = description;
   }
-}
 
+  public getId(): number {
+    return this.id;
+  }
+  public setId(value: number) {
+    this.id = value;
+  }
+
+  public getName(): string {
+    return this.name;
+  }
+  public setName(value: string) {
+    this.name = value;
+  }
+
+  public getDescription(): string {
+    return this.description;
+  }
+  public setDescription(value: string) {
+    this.description = value;
+  }
+}
