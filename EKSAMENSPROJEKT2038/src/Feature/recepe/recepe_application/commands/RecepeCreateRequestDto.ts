@@ -1,6 +1,6 @@
 import { Ingredient } from '../../recepe_domain/model/recepeIngredientEntity';
 import { Category } from '../../recepe_domain/model/recepeCategoryEntity';
-export interface RecepeCreateRequestDto {
+export interface RecipeCreateRequestDto {
   id: number;
   name: string;
   description: string;

@@ -1,4 +1,4 @@
-import { RecepeCreateRequestDto } from './RecepeCreateRequestDto';
-export interface IRecepeCreateCommand {
-  create(recepeCreateRequestDto: RecepeCreateRequestDto): void;
+import { RecipeCreateRequestDto } from './RecepeCreateRequestDto';
+export interface IRecipeCreateCommand {
+  create(recipeCreateRequestDto: RecipeCreateRequestDto): void;
 }

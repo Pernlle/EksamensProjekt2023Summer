@@ -1,4 +1,4 @@
-import { RecepeQueryResultDto } from './recepeQueryResultDto';
-export interface IRecepeGetAllQuery {
-  GetAll(): RecepeQueryResultDto;
+import { RecipeQueryResultDto as RecipeQueryResultDto } from './recepeQueryResultDto';
+export interface IRecipeGetAllQuery {
+  GetAll(): RecipeQueryResultDto;
 }

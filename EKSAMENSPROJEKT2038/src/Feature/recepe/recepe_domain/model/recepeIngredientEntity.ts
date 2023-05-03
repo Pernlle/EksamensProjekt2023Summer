@@ -1,8 +1,8 @@
 export class Ingredient {
-  private id: number;
-  private name: string;
-  private description: string;
-  private nutritionalInformation?: string;
+   id: number;
+   name: string;
+   description: string;
+   nutritionalInformation?: string;
 
   constructor(
     id: number,

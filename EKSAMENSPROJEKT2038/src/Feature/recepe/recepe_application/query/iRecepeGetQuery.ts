@@ -1,4 +1,4 @@
-import { RecepeQueryResultDto } from './recepeQueryResultDto';
-export interface IRecepeGetQuery {
-  Get(id: number): RecepeQueryResultDto;
+import { RecipeQueryResultDto } from './recepeQueryResultDto';
+export interface IRecipeGetQuery {
+  Get(id: number): RecipeQueryResultDto;
 }

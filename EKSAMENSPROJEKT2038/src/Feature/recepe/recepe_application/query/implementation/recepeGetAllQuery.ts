@@ -1,15 +1,15 @@
-import { IRecepeRepository } from '../../repositories/iRecepeRepository';
-import { IRecepeGetAllQuery } from '../iRecepeGetAllQuery';
-import { RecepeQueryResultDto } from '../recepeQueryResultDto';
+import { IRecipeRepository } from '../../repositories/iRecepeRepository';
+import { IRecipeGetAllQuery } from '../iRecepeGetAllQuery';
+import { RecipeQueryResultDto } from '../recepeQueryResultDto';
 
-export class RecepeGetAllQuery implements IRecepeGetAllQuery {
-  private readonly _recepeRepository: IRecepeRepository;
+export class RecipeGetAllQuery implements IRecipeGetAllQuery {
+  private readonly _recepeRepository: IRecipeRepository;
 
-  constructor(recepeRepository: IRecepeRepository) {
+  constructor(recepeRepository: IRecipeRepository) {
     this._recepeRepository = recepeRepository;
   }
 
-  GetAll(): RecepeQueryResultDto {
-    return this._recepeRepository.GetAll();
+  GetAll(): RecipeQueryResultDto {
+    return this._recepeRepository.getAll();
   }
 }

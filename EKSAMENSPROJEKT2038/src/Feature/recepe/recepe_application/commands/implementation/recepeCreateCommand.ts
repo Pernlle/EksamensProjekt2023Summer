@@ -1,17 +1,17 @@
-import { Recepe } from 'src/Feature/recepe/recepe_domain/model/recepeEntity';
-import { IRecepeRepository } from '../../repositories/iRecepeRepository';
-import { RecepeCreateRequestDto } from '../RecepeCreateRequestDto';
-import { IRecepeCreateCommand } from '../iRecepeCreateCommand';
-export class RecepeCreateCommand implements IRecepeCreateCommand {
-  private readonly _recepeRepository: IRecepeRepository;
+import { IRecipe } from 'src/Feature/recepe/recepe_domain/model/recepeEntity';
+import { IRecipeRepository } from '../../repositories/iRecepeRepository';
+import { RecipeCreateRequestDto } from '../RecepeCreateRequestDto';
+import { IRecipeCreateCommand } from '../iRecepeCreateCommand';
+export class RecipeCreateCommand implements IRecipeCreateCommand {
+  private readonly _recepeRepository: IRecipeRepository;
 
-  constructor(recepeRepository: IRecepeRepository) {
+  constructor(recepeRepository: IRecipeRepository) {
     this._recepeRepository = recepeRepository;
   }
 
-  create(recepeCreateRequestDto: RecepeCreateRequestDto): void {
-    this._recepeRepository.Add(
-      new Recepe(
+  create(recepeCreateRequestDto: RecipeCreateRequestDto): void {
+    this._recepeRepository.add(
+      new Recipe(
         recepeCreateRequestDto.id,
         recepeCreateRequestDto.name,
         recepeCreateRequestDto.description,

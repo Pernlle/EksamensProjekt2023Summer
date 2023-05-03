@@ -1,12 +1,8 @@
-import { Category } from '../../recepe_domain/model/recepeCategoryEntity';
-import { Ingredient } from '../../recepe_domain/model/recepeIngredientEntity';
+import { IRecipe } from '../../recepe_domain/model/recepeEntity';
 
-export interface RecepeQueryResultDto {
-  id: number;
-  name: string;
-  description: string;
-  ingredients: Ingredient[];
-  instructions: string;
-  nutritionalInformation?: string;
-  category: Category;
+export class RecipeQueryResultDto {
+  private dtoObject: IRecipe;
+  constructor(dtoObject: IRecipe) {
+    this.dtoObject = dtoObject;
+  }
 }

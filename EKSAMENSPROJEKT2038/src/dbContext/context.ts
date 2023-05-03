@@ -1,7 +1,7 @@
-import { Recepe } from "src/Feature/recepe/recepe_domain/model/recepeEntity";
+import { IRecipe } from 'src/Feature/recepe/recepe_domain/model/recepeEntity';
 
-export class Context{
-    Recepe(){}
+export class Context {
+  Recipe() {}
 
-    constructor(){}
+  constructor() {}
 }

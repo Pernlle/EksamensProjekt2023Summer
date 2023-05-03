@@ -1,4 +1,4 @@
-import { Recepe } from '../../../recepe/recepe_domain/model/recepeEntity';
+import { IRecipe } from '../../../recepe/recepe_domain/model/recepeEntity';
 //import User
 export class Rating {
   id;
@@ -7,7 +7,7 @@ export class Rating {
   ratingValue;
   constructor(
     id: number,
-    recepeId: Recepe,
+    recepeId: IRecipe,
     userId: number,
     ratingValue: number
   ) {

@@ -1,15 +1,15 @@
-import { IRecepeRepository } from '../../repositories/iRecepeRepository';
-import { IRecepeGetQuery } from '../iRecepeGetQuery';
-import { RecepeQueryResultDto } from '../recepeQueryResultDto';
+import { IRecipeRepository } from '../../repositories/iRecepeRepository';
+import { IRecipeGetQuery } from '../iRecepeGetQuery';
+import { RecipeQueryResultDto } from '../recepeQueryResultDto';
 
-export class RecepeGetQuery implements IRecepeGetQuery {
-  private readonly _recepeRepository: IRecepeRepository;
+export class RecipeGetQuery implements IRecipeGetQuery {
+  private readonly _recepeRepository: IRecipeRepository;
 
-  constructor(recepeRepository: IRecepeRepository) {
+  constructor(recepeRepository: IRecipeRepository) {
     this._recepeRepository = recepeRepository;
   }
 
-  Get(id: number): RecepeQueryResultDto {
-    return this._recepeRepository.Get(id);
+  Get(id: number): RecipeQueryResultDto {
+    return this._recepeRepository.get(id);
   }
 }
