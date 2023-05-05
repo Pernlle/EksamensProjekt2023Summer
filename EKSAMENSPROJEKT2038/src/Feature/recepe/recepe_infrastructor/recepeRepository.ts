@@ -12,10 +12,26 @@ export class RecipeRepository implements IRecipeRepository {
     this.recipe = recipe;
   }
   getAll(): RecipeQueryResultDto {
+    const recipeEntity = this.recipe;
+    
+    recipeEntity.map(entity => {
+      return { 
+        id: entity.id, 
+        name: entity.name, 
+        description: entity.description, 
+        ingredients:entity.ingredients, 
+        instructions:entity.instructions, 
+        nutritionalInformation:entity.nutritionalInformation, 
+        category:entity.category }
+    })
     throw new Error('Method not implemented.');
+    //return new RecipeQueryResultDto(recipeEntity);
   }
   update(recepe: IRecipe): void {
-    throw new Error('Method not implemented.');
+    this.update(recepe);
+
+    //this._db.SaveChanges();
+    throw new Error('Recipe could not be updated in teh db');
   }
 
   add(recipe: IRecipe) {
