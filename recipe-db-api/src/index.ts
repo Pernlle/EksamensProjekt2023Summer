@@ -1,5 +1,6 @@
 import express, { Express, Request, Response } from "express";
 import cors from 'cors';
+import { createExpressAdapter } from "./infrastructure-layer";
 
 interface IRecipe {
   id: string;
@@ -11,22 +12,22 @@ const recipes: IRecipe[] = [
   {
     id: "1",
     name: "Fruit salad",
-    ingredients: ["Banana", "Strawberries"],
+    ingredients: ["Banana", "Strawberries", "Cream"],
   },
   {
     id: "2",
-    name: "Fruit salad2",
-    ingredients: ["Banana", "Strawberries"],
+    name: "Banana bread",
+    ingredients: ["Banana", "Egg", "Flour", "Milk"],
   },
   {
     id: "3",
-    name: "Fruit salad3",
-    ingredients: ["Banana", "Strawberries"],
+    name: "Cake",
+    ingredients: ["Banana", "Egg", "Flour", "Milk", "Vanilla"],
   },
   {
     id: "4",
-    name: "Fruit salad4",
-    ingredients: ["Banana", "Strawberries"],
+    name: "Chocolate milk",
+    ingredients: ["Chocolate", "Milk"],
   },
 ];
 
@@ -58,3 +59,4 @@ app.get("/recipe", (req: Request, res: Response) => {
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
+
