@@ -37,6 +37,7 @@ const port = "3001";
 app.use(cors());
 
 app.get("/", (req: Request, res: Response) => {
+  //send method automatically sets content-type to json --can also use res.json, res.sendFile, res.render, ect.
   res.send("Express + TypeScript Server");
 });
 

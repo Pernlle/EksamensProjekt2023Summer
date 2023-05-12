@@ -1,12 +1,13 @@
 import express, { Express, Request, Response } from "express";
 import cors from "cors";
+import { IRecipe, recipes } from '../../recipe-db-api/src/domain-layer';
 
 interface IUser {
   id: string;
   email: string;
   name: string;
   authentication: string; //AuthenticationAPI --
-  favorites: string[];
+  favorites: IRecipe[];
 }
 
 // const UserSchema = new mongoose.Schema({
@@ -25,28 +26,28 @@ const users: IUser[] = [
     name: "Fruit salad",
     email: "Banana",
     authentication: "Strawberry",
-    favorites: ["", ""],
+    favorites: [],
   },
   {
     id: "2",
     name: "Fruit salad",
     email: "Banana",
     authentication: "Strawberry",
-    favorites: ["", ""],
+    favorites: [],
   },
   {
     id: "3",
     name: "Fruit salad",
     email: "Banana",
     authentication: "Strawberry",
-    favorites: ["", ""],
+    favorites: [],
   },
   {
     id: "4",
     name: "Fruit salad",
     email: "Banana",
     authentication: "Strawberry",
-    favorites: ["", ""],
+    favorites: [],
   },
 ];
 
@@ -56,7 +57,7 @@ const port = "3002";
 app.use(cors());
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Express + TypeScript Server");
+  res.send("Express + TypeScript Server + user");
 });
 
 app.get("/users", (req: Request, res: Response) => {
@@ -65,15 +66,44 @@ app.get("/users", (req: Request, res: Response) => {
 });
 
 //change this
-app.get("/favorite", (req: Request, res: Response) => {
+app.get("/user/favorites", (req: Request, res: Response) => {
   const id = req.query.id;
   if (!id) return res.sendStatus(400); // Bad request
 
   // TODO: Look in database for specific user based on id
   const user = users.find((user) => user.id === id);
-  if (user) res.send(JSON.stringify(user));
+  if (user) res.send(JSON.stringify(user.favorites));
 
   res.sendStatus(404); // Not found
+});
+
+app.post('/user/favorites', (req, res) => {
+  const user = users.find((user) => user.id === id);
+
+  if (!user) {
+    return res.status(404).json({ message: `User with ID ${user} not found.` });
+  }
+
+  const { id } = req.body;
+
+  if (!id) {
+    return res.status(400).json({ message: 'Recipe ID is missing from request body.' });
+  }
+
+  const recipe = recipes.find(r => r.id === id);
+
+  if (!recipe) {
+    return res.status(404).json({ message: `Recipe with ID ${id} not found.` });
+  }
+
+  // Check if the recipe is already in the user's favorites
+  if (user.favorites.find(r => r.id === id)) {
+    return res.status(400).json({ message: 'Recipe is already in favorites.' });
+  }
+
+  user.favorites.push(recipe);
+
+  res.status(201).json({ message: 'Recipe added to favorites.' });
 });
 
 app.listen(port, () => {
