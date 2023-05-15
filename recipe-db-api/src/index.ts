@@ -2,13 +2,13 @@ import express, { Express, Request, Response } from "express";
 import cors from 'cors';
 import { createExpressAdapter } from "./infrastructure-layer";
 
-interface IRecipe {
+export interface IRecipe {
   id: string;
   name: string;
   ingredients: string[];
 }
 
-const recipes: IRecipe[] = [
+export const recipes: IRecipe[] = [
   {
     id: "1",
     name: "Fruit salad",

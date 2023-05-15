@@ -4,5 +4,5 @@ export interface IUser {
   email: string;
   name: string;
   authentication: string; //AuthenticationAPI --
-  favorites: IRecipe[];
+  favorites: []; //IRecipe[]
 }

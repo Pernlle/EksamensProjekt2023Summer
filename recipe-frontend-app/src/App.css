@@ -6,4 +6,30 @@
 .recipe {
   text-align: left;
   padding: 20px;
+  list-style: square;
+}
+.user {
+  text-align: left;
+  padding: 20px;
+}
+.li {
+  list-style: square;
+}
+
+.addToFavorites {
+  text-align: left;
+  padding: 20px;
+}
+
+.section-left {
+  border: 10px black;
+  /* overflow: hidden; */
+  float: left;
+  width: 350px;
+  padding-left: 1px;
+  padding-right: 100px;
+  display: grid;
+}
+.section-right {
+  float: right;
 }

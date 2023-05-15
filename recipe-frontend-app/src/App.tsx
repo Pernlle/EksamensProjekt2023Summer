@@ -38,15 +38,15 @@ async function getUsers(): Promise<IUser[]> {
   }
 }
 
-function Users(props: { email: string; name: string; favorites: IRecipe[] }) {
+function Users(props: { email: string; name: string; favorites: [] }) {
   return (
     <div className="user">
       <h3>{props.email}</h3>
-      <h3>{props.name}</h3>
+      <h4>{props.name}</h4>
       <ul>
-        {/* {props.favorites.map((favorites) => (
+        {props.favorites.map((favorites) => (
           <li>{favorites}</li>
-          ))} */}
+          ))}
       </ul>
     </div>
   );
@@ -83,22 +83,24 @@ function App() {
     <div className="App">
       <h1>Recipe universe</h1>
       <hr />
-      <pre>
+      <section className="section-left">
         {recipes.map((recipe) => (
           <Recipe name={recipe.name} ingredients={recipe.ingredients} />
-        ))}
-      </pre>
-      <pre>
+          ))}
+          </section>
+
+          <section className="section-left">
         {users.map((users) => (
           <Users email={users.email}name={users.name} favorites={users.favorites} />
-        ))}
-      </pre>
-      <form onSubmit={handleSubmit}>
-        <label>Recipe -id- :</label> <input type="string"  />
+          ))}
+      <form className="AddToFvorites" onSubmit={handleSubmit}>
+        <label>Recipe -id/name- :</label> <input type="string"  />
         <button type="submit">Add to favorites</button>
       </form>
+          </section>
     </div>
   );
 }
+
 
 export default App;
