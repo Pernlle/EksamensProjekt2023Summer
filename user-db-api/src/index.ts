@@ -1,49 +1,43 @@
-
 import express, { Express, Request, Response } from "express";
 import cors from "cors";
 import { IRecipe, recipes } from "../../recipe-db-api/src/index";
+import bodyParser from "body-parser";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
+const JWT_SECRET = 'mysecretkey'; //not very safe :()
+
+function verifyToken(token: string): JwtPayload {
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
+    return decoded;
+  } catch (err) {
+    throw new Error('Invalid token');
+  }
+}
 
 export interface IUser {
   id: string;
-  email: string;
-  name: string;
-  password: string;
-  authentication: string; //AuthenticationAPI --
+  email?: string;
+  name?: string;
+  authentication?: string; //AuthenticationAPI --
   favorites: IRecipe[];
 }
 
 export const users: IUser[] = [
   {
     id: "1",
-    name: "Fruit salad",
-    email: "Banana",
-    password: "",
-    authentication: "Strawberry",
     favorites: [],
   },
   {
     id: "2",
-    name: "Fruit salad",
-    email: "Banana",
-    password: "",
-    authentication: "Strawberry",
     favorites: [],
   },
   {
     id: "3",
-    name: "Fruit salad",
-    email: "Banana",
-    password: "",
-    authentication: "Strawberry",
     favorites: [],
   },
   {
     id: "4",
-    name: "Fruit salad",
-    email: "Banana",
-    password: "",
-    authentication: "Strawberry",
     favorites: [],
   },
 ];
@@ -51,6 +45,7 @@ export const users: IUser[] = [
 const app: Express = express();
 const port = "3002";
 
+app.use(bodyParser.json());
 app.use(cors());
 
 app.get("/", (req: Request, res: Response) => {
@@ -75,32 +70,35 @@ app.get("/user/favorites", (req: Request, res: Response) => {
 });
 
 app.put("/user/favorites", (req, res) => {
-  const user = users.find((user) => user.id === id);
 
-  if (!user) {
-    return res.status(404).json({ message: `User with ID ${user} not found.` });
-  }
+  console.log("☀️☀️☀️☀️☀️ /user/favorites");
+  console.log(JSON.stringify(req.body));
+  const { recipeId, userId } = req.body;
 
-  const { id } = req.body;
-
-  if (!id) {
+  if (!recipeId) {
     return res
       .status(400)
       .json({ message: "Recipe ID is missing from request body." });
   }
 
-  const recipe = recipes.find((r) => r.id === id);
+  if (!userId) {
+    return res
+      .status(400)
+      .json({ message: "User ID is missing from request body." });
+  }
 
-  if (!recipe) {
-    return res.status(404).json({ message: `Recipe with ID ${id} not found.` });
+  const user = users.find((user) => user.id === userId);
+
+  if (!user) {
+    return res.status(404).json({ message: `User with ID ${user} not found.` });
   }
 
   // Check if the recipe is already in the user's favorites
-  if (user.favorites.find((r) => r.id === id)) {
+  if (user.favorites.find((r) => r.id === recipeId)) {
     return res.status(400).json({ message: "Recipe is already in favorites." });
   }
 
-  user.favorites.push(recipe);
+  user.favorites.push(recipeId);
 
   res.status(201).json({ message: "Recipe added to favorites." });
 });

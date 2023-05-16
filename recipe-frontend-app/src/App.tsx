@@ -1,27 +1,27 @@
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { IRecipe } from "./viewModels/recipeViewModel";
 import { IUser } from "./viewModels/userViewModel";
+import { addFavoriteRecipe, getRecipes, getUsers, login } from "./api";
 
-async function getRecipes(): Promise<IRecipe[]> {
-  try {
-    const response = await fetch("http://localhost:3001/recipes");
-    const json = await response.json();
-    return json;
-  } catch (error) {
-    console.error(error);
-    return [];
+function Recipe(props: {
+  name: string;
+  ingredients: string[];
+  id: string;
+  onAddedToFavorite: () => void;
+}) {
+  async function handleAddToFavorites() {
+    await addFavoriteRecipe(props.id, "1");
+    props.onAddedToFavorite();
   }
-}
 
-function Recipe(props: { name: string; ingredients: string[] }) {
   return (
     <table className="recipe">
       <thead>
-      <tr>
-        <th>Name</th>
-        <th>Ingrediens</th>
-      </tr>
+        <tr>
+          <th>Name</th>
+          <th>Ingrediens</th>
+        </tr>
       </thead>
       <tr>
         <td>{props.name}</td>
@@ -33,40 +33,67 @@ function Recipe(props: { name: string; ingredients: string[] }) {
           </ul>
         </td>
       </tr>
+      <button onClick={handleAddToFavorites}>Add to favorites</button>
     </table>
   );
 }
 
-async function getUsers(): Promise<IUser[]> {
-  try {
-    const response = await fetch("http://localhost:3002/users");
-    const json = await response.json();
-    return json;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-}
-
-function Users(props: { email: string; name: string; favorites: [] }) {
+function Users(props: { email: string; name: string; favorites: string[] }) {
   return (
     <table className="user">
       {/* <table> */}
-        <tr>
-          <th>Email</th>
-          <th>Name</th>
-          <th>Favorite recipes</th>
-        </tr>
-        <tr>
-          <td>{props.email}</td>
-          <td>{props.name}</td>
-          <td><ul>
-        {props.favorites.map((favorites) => (
-          <li>{favorites}</li>
-          ))}
-      </ul></td>
-        </tr>
+      <tr>
+        <th>Favorite recipes</th>
+      </tr>
+      <tr>
+        <td>
+          <ul>
+            {props.favorites.map((favorites) => (
+              <li>{favorites}</li>
+            ))}
+          </ul>
+        </td>
+      </tr>
     </table>
+  );
+}
+
+function LoginForm() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    console.log("login");
+    const token = await login(email, password); 
+    /** 
+     * 1. Gem token i localstorage
+     * 2. Lav en request til user-db-api med token i headeren
+     * 3. I user-db-api skal den header så læses og valideres.
+     * 4. Hvis validering fejler skal der kastes en fejl
+     * 5. Hvis validering lykkes skal der returneres det der skal returneres
+     */
+  }
+
+  function handleEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setEmail(event.target.value);
+  }
+
+  function handlePasswordChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setPassword(event.target.value);
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        Email: <input type="text" value={email} onChange={handleEmailChange} />
+      </label>
+      <label>
+        Password:{" "}
+        <input type="text" value={password} onChange={handlePasswordChange} />
+      </label>
+      <button type="submit">login</button>
+    </form>
   );
 }
 
@@ -74,51 +101,62 @@ function App() {
   const [recipes, setRecipes] = useState<IRecipe[]>([]);
   const [users, setUsers] = useState<IUser[]>([]);
 
-
   useEffect(() => {
     handleFetchRecipes();
-  }, [])
+  }, []);
 
   async function handleFetchRecipes() {
     const recipes = await getRecipes();
     setRecipes(recipes);
   }
 
-  useEffect(()=> {
+  useEffect(() => {
     handleFetchUsers();
-  })
+  }, []);
 
   async function handleFetchUsers() {
     const users = await getUsers();
     setUsers(users);
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
-    throw new Error("Function not implemented.");
-  }
-
   return (
     <div className="App">
       <h1>Recipe universe</h1>
       <hr />
+      <LoginForm />
       <section className="section-left">
         {recipes.map((recipe) => (
-          <Recipe name={recipe.name} ingredients={recipe.ingredients} />
-          ))}
+          <Recipe
+            name={recipe.name}
+            ingredients={recipe.ingredients}
+            id={recipe.id}
+            onAddedToFavorite={handleFetchUsers}
+          />
+        ))}
       </section>
 
       <section className="section-left">
-        {users.map((users) => (
-          <Users email={users.email}name={users.name} favorites={users.favorites} />
-          ))}
-        <form className="AddToFvorites" onSubmit={handleSubmit}>
-          <label>Recipe -id/name- :</label> <input type="string"  />
-          <button type="submit">Add to favorites</button>
-        </form>
+        {users.map((users) => {
+          const recipeNames: string[] = [];
+          for (const favorite of users.favorites) {
+            const recipe = recipes.find((recipe) => recipe.id === favorite);
+
+            if (recipe) {
+              recipeNames.push(recipe.name);
+            }
+          }
+
+          return (
+            <Users
+              email={users.email}
+              name={users.name}
+              favorites={recipeNames}
+            />
+          );
+        })}
       </section>
     </div>
   );
 }
-
 
 export default App;
