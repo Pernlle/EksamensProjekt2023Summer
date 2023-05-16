@@ -16,14 +16,24 @@ async function getRecipes(): Promise<IRecipe[]> {
 
 function Recipe(props: { name: string; ingredients: string[] }) {
   return (
-    <div className="recipe">
-      <h3>{props.name}</h3>
-      <ul>
-        {props.ingredients.map((ingredient) => (
-          <li>{ingredient}</li>
-          ))}
-      </ul>
-    </div>
+    <table className="recipe">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Ingrediens</th>
+      </tr>
+      </thead>
+      <tr>
+        <td>{props.name}</td>
+        <td>
+          <ul>
+            {props.ingredients.map((ingredient) => (
+              <li>{ingredient}</li>
+            ))}
+          </ul>
+        </td>
+      </tr>
+    </table>
   );
 }
 
@@ -40,15 +50,23 @@ async function getUsers(): Promise<IUser[]> {
 
 function Users(props: { email: string; name: string; favorites: [] }) {
   return (
-    <div className="user">
-      <h3>{props.email}</h3>
-      <h4>{props.name}</h4>
-      <ul>
+    <table className="user">
+      {/* <table> */}
+        <tr>
+          <th>Email</th>
+          <th>Name</th>
+          <th>Favorite recipes</th>
+        </tr>
+        <tr>
+          <td>{props.email}</td>
+          <td>{props.name}</td>
+          <td><ul>
         {props.favorites.map((favorites) => (
           <li>{favorites}</li>
           ))}
-      </ul>
-    </div>
+      </ul></td>
+        </tr>
+    </table>
   );
 }
 
@@ -87,17 +105,17 @@ function App() {
         {recipes.map((recipe) => (
           <Recipe name={recipe.name} ingredients={recipe.ingredients} />
           ))}
-          </section>
+      </section>
 
-          <section className="section-left">
+      <section className="section-left">
         {users.map((users) => (
           <Users email={users.email}name={users.name} favorites={users.favorites} />
           ))}
-      <form className="AddToFvorites" onSubmit={handleSubmit}>
-        <label>Recipe -id/name- :</label> <input type="string"  />
-        <button type="submit">Add to favorites</button>
-      </form>
-          </section>
+        <form className="AddToFvorites" onSubmit={handleSubmit}>
+          <label>Recipe -id/name- :</label> <input type="string"  />
+          <button type="submit">Add to favorites</button>
+        </form>
+      </section>
     </div>
   );
 }

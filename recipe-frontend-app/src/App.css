@@ -6,15 +6,28 @@
 .recipe {
   text-align: left;
   padding: 20px;
-  list-style: square;
+  /* margin-left: 20px;
+  margin-right: 10px; */
 }
 .user {
   text-align: left;
   padding: 20px;
+  /* border:1px black;
+  border-style: solid; */
 }
-.li {
+li {
   list-style: square;
 }
+table {
+  border: 1px;
+  border-style: solid;
+  margin-inline-start: 50px;
+  margin-block-start: 10px;
+  /* display: inline; */
+}
+/* th {
+  border-style: solid;
+} */
 
 .addToFavorites {
   text-align: left;
@@ -22,7 +35,8 @@
 }
 
 .section-left {
-  border: 10px black;
+  /* border: 1px black; */
+  /* border-style: solid; */
   /* overflow: hidden; */
   float: left;
   width: 350px;
