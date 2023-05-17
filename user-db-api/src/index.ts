@@ -4,14 +4,14 @@ import { IRecipe, recipes } from "../../recipe-db-api/src/index";
 import bodyParser from "body-parser";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
-const JWT_SECRET = 'mysecretkey'; //not very safe :()
+const JWT_SECRET = "mysecretkey"; //not very safe :()
 
 function verifyToken(token: string): JwtPayload {
   try {
     const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
     return decoded;
   } catch (err) {
-    throw new Error('Invalid token');
+    throw new Error("Invalid token");
   }
 }
 
@@ -52,9 +52,19 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server + user");
 });
 
-app.get("/users", (req: Request, res: Response) => {
+// app.get("/users", (req: Request, res: Response) => {
+//   // TODO: Look in database for users here and send them
+//   res.send(JSON.stringify(users));
+// });
+
+//token verification getter
+app.get("/user", (req: Request, res: Response) => {
+  const token = req.body;
   // TODO: Look in database for users here and send them
-  res.send(JSON.stringify(users));
+  if (verifyToken(token)) {
+    res.send(JSON.stringify(users));
+  }
+  res.sendStatus(404).json({ message: `User is not authorized.` });
 });
 
 //change this
@@ -70,7 +80,6 @@ app.get("/user/favorites", (req: Request, res: Response) => {
 });
 
 app.put("/user/favorites", (req, res) => {
-
   console.log("☀️☀️☀️☀️☀️ /user/favorites");
   console.log(JSON.stringify(req.body));
   const { recipeId, userId } = req.body;

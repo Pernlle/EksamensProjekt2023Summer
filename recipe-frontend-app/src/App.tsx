@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import { IRecipe } from "./viewModels/recipeViewModel";
 import { IUser } from "./viewModels/userViewModel";
-import { addFavoriteRecipe, getRecipes, getUsers, login } from "./api";
+import { addFavoriteRecipe, getRecipes, getUsersWithToken, login } from "./api";
 
 function Recipe(props: {
   name: string;
@@ -73,6 +73,9 @@ function LoginForm() {
      * 4. Hvis validering fejler skal der kastes en fejl
      * 5. Hvis validering lykkes skal der returneres det der skal returneres
      */
+    if (typeof token === 'string'){
+    localStorage.setItem('token', token);
+    }
   }
 
   function handleEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -114,8 +117,9 @@ function App() {
     handleFetchUsers();
   }, []);
 
-  async function handleFetchUsers() {
-    const users = await getUsers();
+  async function handleFetchUsers() { //props: {id: string}
+    const token=localStorage.getItem('token') as string
+    const users = await getUsersWithToken(token);
     setUsers(users);
   }
 
@@ -123,7 +127,7 @@ function App() {
     <div className="App">
       <h1>Recipe universe</h1>
       <hr />
-      <LoginForm />
+      <LoginForm/>
       <section className="section-left">
         {recipes.map((recipe) => (
           <Recipe
