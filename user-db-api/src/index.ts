@@ -19,7 +19,7 @@ export interface IUser {
   id: string;
   email?: string;
   name?: string;
-  authentication?: string; //AuthenticationAPI --
+  authentication?: string; //AuthenticationAPI token --
   favorites: IRecipe[];
 }
 
@@ -67,7 +67,6 @@ app.get("/user", (req: Request, res: Response) => {
   res.sendStatus(404).json({ message: `User is not authorized.` });
 });
 
-//change this
 app.get("/user/favorites", (req: Request, res: Response) => {
   const id = req.query.id;
   if (!id) return res.sendStatus(400); // Bad request

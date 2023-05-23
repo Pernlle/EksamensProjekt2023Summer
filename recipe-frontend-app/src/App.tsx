@@ -33,6 +33,7 @@ function Recipe(props: {
           </ul>
         </td>
       </tr>
+      {/* Hvis du er logget ind, kan denne knap ses! */}
       <button onClick={handleAddToFavorites}>Add to favorites</button>
     </table>
   );
@@ -41,7 +42,6 @@ function Recipe(props: {
 function Users(props: { email: string; name: string; favorites: string[] }) {
   return (
     <table className="user">
-      {/* <table> */}
       <tr>
         <th>Favorite recipes</th>
       </tr>
