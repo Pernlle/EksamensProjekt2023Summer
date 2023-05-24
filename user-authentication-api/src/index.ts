@@ -1,4 +1,6 @@
 import jwt from "jsonwebtoken";
+import cors from "cors";
+import bodyParser from "body-parser";
 import express, { Express, Request, Response } from "express";
 
 interface IUser {
@@ -35,7 +37,7 @@ const users: IUser[] = [
   },
 ];
 
-const JWT_SECRET = "mysecretkey";
+const JWT_SECRET = "myverysecretkey";
 
 interface JwtPayload {
   id: string;
@@ -53,6 +55,7 @@ function generateToken(user: IUser): string {
   return jwt.sign(payload, JWT_SECRET, options);
 }
 
+//Der mangler fejlbeskeder - brugeren ved ikke hvad der foregår
 async function login(
   email: string,
   password: string
@@ -71,14 +74,22 @@ async function login(
 
 const app: Express = express();
 const port = "3003";
+app.use(bodyParser.json());
+app.use(cors());
+
+app.get("/", (req: Request, res: Response) => {
+  console.log("1123");
+  res.send("Hej lotte");
+});
 
 app.post("/login", async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     const { token } = await login(email, password);
     res.json({ token });
-  } catch {
-    return res.sendStatus(401);
+  } catch(error) {
+    console.error(error)
+    res.status(401)
   }
 });
 
