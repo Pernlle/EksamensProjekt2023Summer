@@ -25,6 +25,9 @@ table {
   margin-block-start: 10px;
   /* display: inline; */
 }
+button {
+  color:teal
+}
 /* th {
   border-style: solid;
 } */

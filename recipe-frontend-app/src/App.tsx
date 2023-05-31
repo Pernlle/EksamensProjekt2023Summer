@@ -91,13 +91,14 @@ function LoginForm({ onLogin }: { onLogin: () => {} }) {
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        Email: <input type="text" value={email} onChange={handleEmailChange} />
+        Email:&nbsp;&nbsp;<input type="text" value={email} onChange={handleEmailChange} />
       </label>
       <label>
-        Password:{" "}
-        <input type="text" value={password} onChange={handlePasswordChange} />
+      &nbsp;&nbsp;Password:&nbsp;&nbsp;{" "} 
+        <input type="password" value={password} onChange={handlePasswordChange} />
       </label>
-      <button type="submit">login</button>
+      &nbsp; &nbsp;
+      <button type="submit"> &nbsp;&nbsp;login &nbsp; </button>
     </form>
   );
 }
@@ -129,7 +130,10 @@ function App() {
       const recipe = recipes.find((recipe) => recipe.id === favorite);
 
       if (recipe) {
+        const exist = recipeNames.includes(recipe!.name);
+        if (!exist){
         recipeNames.push(recipe.name);
+        }
       }
     }
   }
