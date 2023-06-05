@@ -23,6 +23,7 @@ table {
   border-style: solid;
   margin-inline-start: 50px;
   margin-block-start: 10px;
+  background-color:lightblue;
   /* display: inline; */
 }
 button {
